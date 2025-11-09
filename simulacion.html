@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Simulación MRU / MRUA</title>
+
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <!-- Encabezado eliminado -->
+
+  <main class="layout solo-izquierda">
+    <section class="panel">
+      <div class="panel-header">
+        <span class="chip">Simulación MRU / MRUA</span>
+        <span class="chip" id="estadoChip">Detenido</span>
+        <div style="margin-left:auto" class="btn-group">
+          <label class="seg">
+            <select id="tipoSel" aria-label="Tipo de movimiento" style="background:transparent;border:0;color:#e5e7eb">
+              <option value="2">MRUA (aceleración constante)</option>
+              <option value="1">MRU (velocidad constante)</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <div class="controls">
+        <div class="metric">
+          <div class="title">TIEMPO TOTAL (s)</div>
+          <div class="value">
+            <button class="btn icon gray" id="tMenos" aria-label="Disminuir tiempo">−</button>
+            <input id="dur" type="number" step="0.1" value="6.6" inputmode="decimal" />
+            <button class="btn icon gray" id="tMas" aria-label="Aumentar tiempo">+</button>
+          </div>
+        </div>
+
+        <div class="metric" id="accBox">
+          <div class="title">ACELERACIÓN (m/s²)</div>
+            <div class="value">
+              <button class="btn icon gray" id="aMenos" aria-label="Disminuir aceleración">−</button>
+              <input id="a" type="number" step="0.1" value="3" inputmode="decimal" />
+              <button class="btn icon gray" id="aMas" aria-label="Aumentar aceleración">+</button>
+            </div>
+            <div class="hint" id="accHint" aria-live="polite" style="display:none">En MRU, a = 0 (deshabilitado)</div>
+        </div>
+
+        <div class="metric">
+          <div class="title">VELOCIDAD INICIAL (m/s)</div>
+          <div class="value">
+            <button class="btn icon gray" id="vMenos" aria-label="Disminuir velocidad">−</button>
+            <input id="v0" type="number" step="0.1" value="0" inputmode="decimal" />
+            <button class="btn icon gray" id="vMas" aria-label="Aumentar velocidad">+</button>
+          </div>
+        </div>
+
+        <div class="btn-group controls-actions">
+          <button id="playPause" class="btn orange">Iniciar</button>
+          <button id="resetBtn" class="btn reset">Reiniciar</button>
+          <button id="resultBtn" class="btn blue" disabled>Resultados</button>
+        </div>
+      </div>
+
+      <div class="stage">
+        <div class="mini-track" id="miniTrack">
+          <div class="mini-dot" id="miniDot"></div>
+        </div>
+
+        <div class="track" id="track">
+          <div class="crowd"></div>
+          <div class="lane"></div>
+          <img id="car" class="car" src="carro.gif" alt="Auto" draggable="false" />
+        </div>
+      </div>
+
+      <div class="charts">
+        <div class="chart-box"><canvas id="chartAcc"></canvas></div>
+        <div class="chart-box"><canvas id="chartVel"></canvas></div>
+        <div class="chart-box"><canvas id="chartDist"></canvas></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal resultados -->
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <header>
+        <span id="modalTitle">Resultados de la simulación</span>
+        <button class="close-x" id="closeModal" aria-label="Cerrar">✕</button>
+      </header>
+      <div class="body">
+        <table>
+          <tbody id="tblRes"></tbody>
+        </table>
+        <div class="actions-row">
+          <button class="btn gray" id="copyRes">Copiar</button>
+          <button class="btn blue" id="saveRes">Descargar CSV</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
