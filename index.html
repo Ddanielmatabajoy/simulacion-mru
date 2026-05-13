@@ -5,23 +5,91 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Simulación MRU / MRUA</title>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="styles.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script defer src="script.js"></script>
 </head>
 <body>
-  <!-- Encabezado eliminado -->
 
-  <main class="layout solo-izquierda">
+  <!-- ============ ENCABEZADO INSTITUCIONAL ============ -->
+  <header class="institutional">
+    <div class="institutional-inner">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">MRU</div>
+        <div class="brand-text">
+          <span class="brand-line-1">Recurso Educativo Digital</span>
+          <span class="brand-line-2">Física · Cinemática</span>
+        </div>
+      </div>
+      <nav class="topnav" aria-label="Navegación principal">
+        <button class="topnav-link" id="abrirCurricular" type="button">Vínculo curricular</button>
+        <button class="topnav-link" id="abrirCreditos" type="button">Créditos</button>
+        <button class="topnav-link" id="abrirBiblio" type="button">Bibliografía</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============ BREADCRUMB ============ -->
+  <div class="breadcrumb">
+    <div class="breadcrumb-inner">
+      <span class="crumb">Inicio</span>
+      <span class="crumb-sep">›</span>
+      <span class="crumb current">Movimiento Rectilíneo Uniforme y Uniformemente Acelerado</span>
+    </div>
+  </div>
+
+  <!-- ============ INTRODUCCIÓN ============ -->
+  <section class="intro">
+    <div class="intro-inner">
+      <h1>Movimiento Rectilíneo Uniforme<br><span class="intro-and">y Uniformemente Acelerado</span></h1>
+      <p>
+        En esta simulación podrás manipular los valores de
+        <strong>velocidad inicial</strong>, <strong>aceleración</strong> y
+        <strong>tiempo</strong> de un automóvil, y observar en tiempo real
+        las gráficas de aceleración, velocidad y distancia respecto al tiempo.
+        Cambia entre <strong>MRU</strong> (velocidad constante) y
+        <strong>MRUA</strong> (aceleración constante) para comparar
+        ambos comportamientos.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ NIVELES / RETOS (tabs) ============ -->
+  <nav class="levels" aria-label="Niveles del reto">
+    <div class="levels-inner">
+      <button class="level-tab active" data-level="0" type="button">
+        <span class="lt-dot"></span> Libre
+      </button>
+      <button class="level-tab" data-level="1" type="button">
+        <span class="lt-dot"></span> Novato
+      </button>
+      <button class="level-tab" data-level="2" type="button">
+        <span class="lt-dot"></span> Aprendiz
+      </button>
+      <button class="level-tab" data-level="3" type="button">
+        <span class="lt-dot"></span> Experimentado
+      </button>
+      <button class="level-tab" data-level="4" type="button">
+        <span class="lt-dot final"></span> Reto final
+      </button>
+    </div>
+  </nav>
+
+  <!-- ============ ÁREA DE SIMULACIÓN ============ -->
+  <main class="layout dos-col">
     <section class="panel">
       <div class="panel-header">
-        <span class="chip">Simulación MRU / MRUA</span>
+        <span class="chip chip-title">Panel de control</span>
         <span class="chip" id="estadoChip">Detenido</span>
         <div style="margin-left:auto" class="btn-group">
           <label class="seg">
-            <select id="tipoSel" aria-label="Tipo de movimiento" style="background:transparent;border:0;color:#e5e7eb">
-              <option value="2">MRUA (aceleración constante)</option>
-              <option value="1">MRU (velocidad constante)</option>
+            <select id="tipoSel" aria-label="Tipo de movimiento">
+              <option value="2">MRUA · aceleración constante</option>
+              <option value="1">MRU · velocidad constante</option>
             </select>
           </label>
         </div>
@@ -29,7 +97,7 @@
 
       <div class="controls">
         <div class="metric">
-          <div class="title">TIEMPO TOTAL (s)</div>
+          <div class="title">Tiempo total (s)</div>
           <div class="value">
             <button class="btn icon gray" id="tMenos" aria-label="Disminuir tiempo">−</button>
             <input id="dur" type="number" step="0.1" value="6.6" inputmode="decimal" />
@@ -38,17 +106,17 @@
         </div>
 
         <div class="metric" id="accBox">
-          <div class="title">ACELERACIÓN (m/s²)</div>
-            <div class="value">
-              <button class="btn icon gray" id="aMenos" aria-label="Disminuir aceleración">−</button>
-              <input id="a" type="number" step="0.1" value="3" inputmode="decimal" />
-              <button class="btn icon gray" id="aMas" aria-label="Aumentar aceleración">+</button>
-            </div>
-            <div class="hint" id="accHint" aria-live="polite" style="display:none">En MRU, a = 0 (deshabilitado)</div>
+          <div class="title">Aceleración (m/s²)</div>
+          <div class="value">
+            <button class="btn icon gray" id="aMenos" aria-label="Disminuir aceleración">−</button>
+            <input id="a" type="number" step="0.1" value="3" inputmode="decimal" />
+            <button class="btn icon gray" id="aMas" aria-label="Aumentar aceleración">+</button>
+          </div>
+          <div class="hint" id="accHint" aria-live="polite" style="display:none">En MRU, a = 0 (deshabilitado)</div>
         </div>
 
         <div class="metric">
-          <div class="title">VELOCIDAD INICIAL (m/s)</div>
+          <div class="title">Velocidad inicial (m/s)</div>
           <div class="value">
             <button class="btn icon gray" id="vMenos" aria-label="Disminuir velocidad">−</button>
             <input id="v0" type="number" step="0.1" value="0" inputmode="decimal" />
@@ -76,14 +144,95 @@
       </div>
 
       <div class="charts">
-        <div class="chart-box"><canvas id="chartAcc"></canvas></div>
-        <div class="chart-box"><canvas id="chartVel"></canvas></div>
-        <div class="chart-box"><canvas id="chartDist"></canvas></div>
+        <div class="chart-box">
+          <div class="chart-label">Aceleración vs. tiempo</div>
+          <canvas id="chartAcc"></canvas>
+        </div>
+        <div class="chart-box">
+          <div class="chart-label">Velocidad vs. tiempo</div>
+          <canvas id="chartVel"></canvas>
+        </div>
+        <div class="chart-box">
+          <div class="chart-label">Distancia vs. tiempo</div>
+          <canvas id="chartDist"></canvas>
+        </div>
       </div>
     </section>
+
+    <!-- ============ PANEL LATERAL: RETO ============ -->
+    <aside class="panel panel-side" id="challengePanel" aria-label="Reto">
+      <div class="panel-header side-header">
+        <span class="chip chip-title" id="chTitle">Modo libre</span>
+        <span class="chip chip-level" id="chLevel">Sin reto</span>
+      </div>
+
+      <div class="challenge-body">
+        <div class="challenge-illu" aria-hidden="true">
+          <svg viewBox="0 0 80 50" width="64" height="40">
+            <rect x="6" y="22" width="68" height="16" rx="4" fill="#1c5a6a"/>
+            <rect x="14" y="14" width="48" height="12" rx="3" fill="#5fc3e4"/>
+            <circle cx="22" cy="40" r="6" fill="#1f2937"/>
+            <circle cx="58" cy="40" r="6" fill="#1f2937"/>
+            <circle cx="22" cy="40" r="2.5" fill="#9ca3af"/>
+            <circle cx="58" cy="40" r="2.5" fill="#9ca3af"/>
+          </svg>
+        </div>
+
+        <p class="challenge-text" id="chText">
+          Estás en modo libre: elige un nivel arriba para recibir un reto con
+          una historia, parámetros sugeridos y una pregunta que se contesta
+          observando las gráficas.
+        </p>
+
+        <div class="challenge-params" id="chParams" hidden>
+          <div class="cp-row"><span>Tipo</span><strong id="cpTipo"></strong></div>
+          <div class="cp-row"><span>v₀</span><strong id="cpV0"></strong></div>
+          <div class="cp-row"><span>a</span><strong id="cpA"></strong></div>
+          <div class="cp-row"><span>T</span><strong id="cpT"></strong></div>
+        </div>
+
+        <button class="btn orange ch-load" id="loadParamsBtn" type="button" hidden>
+          Cargar parámetros en la simulación
+        </button>
+
+        <div class="challenge-question" id="chQuestion" hidden>
+          <div class="cq-q" id="cqText"></div>
+          <div class="cq-opts" id="cqOpts"></div>
+          <div class="cq-actions">
+            <button class="btn orange" id="checkChBtn" type="button">Revisar</button>
+            <button class="btn gray"   id="resetChBtn" type="button">Limpiar</button>
+            <div class="cq-feedback" id="cqFeedback" hidden></div>
+          </div>
+        </div>
+
+        <div class="challenge-hint">
+          <strong>Tip:</strong> primero pulsa <em>Iniciar</em> y deja correr la simulación.
+          Después observa las tres gráficas y elige tu respuesta.
+        </div>
+      </div>
+    </aside>
   </main>
 
-  <!-- Modal resultados -->
+  <!-- ============ PIE INSTITUCIONAL ============ -->
+  <footer class="institutional-foot">
+    <div class="foot-inner">
+      <p>
+        Recurso educativo desarrollado para el estudio del movimiento rectilíneo
+        uniforme y uniformemente acelerado. Versión 1.0.0
+      </p>
+      <p class="foot-links">
+        <button class="link" id="abrirCreditos2" type="button">Créditos</button>
+        <span class="dot">·</span>
+        <button class="link" id="abrirBiblio2" type="button">Bibliografía</button>
+      </p>
+      <p class="foot-copy">
+        © Material educativo de uso académico. Inspirado en el recurso
+        “Movimiento con velocidad variable” de la UNAM/DGTIC.
+      </p>
+    </div>
+  </footer>
+
+  <!-- ============ MODAL RESULTADOS ============ -->
   <div class="modal" id="modal" aria-hidden="true">
     <div class="card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <header>
@@ -98,8 +247,114 @@
           <button class="btn gray" id="copyRes">Copiar</button>
           <button class="btn blue" id="saveRes">Descargar CSV</button>
         </div>
+
+        <!-- ====== EJERCICIOS DE COMPRENSIÓN ====== -->
+        <section class="exercises" id="exercises">
+          <h3 class="ex-title">Ejercicios — resuélvelos con las gráficas</h3>
+          <p class="ex-sub">Selecciona una opción en cada pregunta y pulsa <strong>Revisar</strong>.</p>
+          <div id="exList" class="ex-list"></div>
+          <div class="ex-actions">
+            <button class="btn orange" id="checkExBtn" type="button">Revisar</button>
+            <button class="btn gray"   id="resetExBtn" type="button">Reintentar</button>
+            <div class="ex-score" id="exScore" aria-live="polite"></div>
+          </div>
+        </section>
       </div>
     </div>
   </div>
+
+  <!-- ============ MODAL VÍNCULO CURRICULAR ============ -->
+  <div class="modal" id="modalCurricular" aria-hidden="true">
+    <div class="card card-doc" role="dialog" aria-modal="true" aria-labelledby="curTitle">
+      <header>
+        <span id="curTitle">Vínculo curricular</span>
+        <button class="close-x" data-close="modalCurricular" aria-label="Cerrar">✕</button>
+      </header>
+      <div class="body">
+        <h4>Asignatura: Física</h4>
+        <h5>Unidad: Cinemática · Movimiento rectilíneo</h5>
+        <h5>Tema: Movimiento con velocidad constante y velocidad variable</h5>
+        <p class="lead">Aprendizajes esperados:</p>
+        <ul class="doc-list">
+          <li>Distinguir entre movimiento rectilíneo uniforme (MRU) y movimiento rectilíneo uniformemente acelerado (MRUA) a partir de su graficación.</li>
+          <li>Interpretar gráficas de aceleración, velocidad y distancia respecto al tiempo, e inferir su utilidad en el análisis del movimiento.</li>
+          <li>Identificar las diferencias y la relación entre velocidad y aceleración (positiva y negativa).</li>
+          <li>Resolver problemas e identificar su gráfica de solución.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ MODAL CRÉDITOS ============ -->
+  <div class="modal" id="modalCreditos" aria-hidden="true">
+    <div class="card card-doc" role="dialog" aria-modal="true" aria-labelledby="credTitle">
+      <header>
+        <span id="credTitle">Créditos</span>
+        <button class="close-x" data-close="modalCreditos" aria-label="Cerrar">✕</button>
+      </header>
+      <div class="body">
+        <h5>Desarrollo</h5>
+        <ul class="doc-list">
+          <li>Daniel Mata · Programación y diseño</li>
+        </ul>
+        <h5>Inspiración didáctica</h5>
+        <p>
+          Este material se inspira en el recurso “Movimiento con velocidad
+          variable” desarrollado por la Coordinación de Innovación y Desarrollo
+          de la UNAM/DGTIC, a su vez adaptado del interactivo “¿Cómo se mueven
+          las cosas? Aceleración” del Ministerio de Educación de España.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ MODAL BIBLIOGRAFÍA ============ -->
+  <div class="modal" id="modalBiblio" aria-hidden="true">
+    <div class="card card-doc" role="dialog" aria-modal="true" aria-labelledby="bibTitle">
+      <header>
+        <span id="bibTitle">Bibliografía</span>
+        <button class="close-x" data-close="modalBiblio" aria-label="Cerrar">✕</button>
+      </header>
+      <div class="body">
+        <ul class="doc-list bib">
+          <li>Gutiérrez, C. (2009). <em>Física general</em>. México: McGraw-Hill.</li>
+          <li>Hewitt, P. (2007). <em>Física conceptual</em> (10a ed.). México: Pearson Educación.</li>
+          <li>Pérez, H. (2002). <em>Física general</em>. México: Publicaciones Cultural.</li>
+          <li>Serway, R. &amp; Jewett, J. (2018). <em>Física para ciencias e ingeniería</em>. México: Cengage.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Aperturas/cierres de los modales informativos (sin tocar la lógica de simulación)
+    document.addEventListener('DOMContentLoaded', () => {
+      const open = (id) => {
+        const m = document.getElementById(id);
+        if (m) m.style.display = 'grid';
+      };
+      const close = (id) => {
+        const m = document.getElementById(id);
+        if (m) m.style.display = 'none';
+      };
+      const bind = (btnId, modalId) => {
+        const b = document.getElementById(btnId);
+        if (b) b.addEventListener('click', () => open(modalId));
+      };
+      bind('abrirCurricular', 'modalCurricular');
+      bind('abrirCreditos',   'modalCreditos');
+      bind('abrirBiblio',     'modalBiblio');
+      bind('abrirCreditos2',  'modalCreditos');
+      bind('abrirBiblio2',    'modalBiblio');
+
+      document.querySelectorAll('[data-close]').forEach(btn => {
+        btn.addEventListener('click', () => close(btn.getAttribute('data-close')));
+      });
+      ['modalCurricular','modalCreditos','modalBiblio'].forEach(id => {
+        const m = document.getElementById(id);
+        if (m) m.addEventListener('click', (e) => { if (e.target === m) close(id); });
+      });
+    });
+  </script>
 </body>
 </html>
